@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
+// import SpreadOperator from "./SpreadOperator";
+
 // Class컴포넌트로 만들기
 export default class App extends Component {
   // State 생성
@@ -7,12 +9,7 @@ export default class App extends Component {
     todoData: [
       {
         id: "1",
-        title: "공부하기",
-        completed: true,
-      },
-      {
-        id: "2",
-        title: "청소하기",
+        title: "ㅎㅇ",
         completed: false,
       },
     ],
@@ -28,11 +25,12 @@ export default class App extends Component {
     float: "right",
   };
 
-  getStyle = () => {
+  // completed값이 true(체크)면 선긋기
+  getStyle = (completed) => {
     return {
       padding: "15px 5px 15px 5px",
       borderBottom: "1px dotted #000",
-      // textDecoration: "none",
+      textDecoration: completed ? "line-through" : "none",
     };
   };
 
@@ -61,13 +59,26 @@ export default class App extends Component {
       completed: false,
     };
 
-    // 원래 있던 할일 목록에 새로운 할 일 더해주기
-    this.setState({ todoData: [...this.state.todoData, newTodo] });
+    // 원래 있던 할일 목록에 새로운 할 일 더해주고, 입력은 빈값 처리
+    this.setState({ todoData: [...this.state.todoData, newTodo], value: "" });
+  };
+
+  // 체크 박스 선택시 줄긋기
+  // 해당 id값을 받고, 받은 id랑,  todoData의 id랑 일치하면, todoData의 completed값을 변경시킴
+  handleCompleChange = ({ dataId }) => {
+    let newTodoData = this.state.todoData.map((data) => {
+      if (data.id === dataId) {
+        data.completed = !data.completed;
+      }
+      return data;
+    });
+    this.setState({ todoData: newTodoData });
   };
 
   render() {
     return (
       <div className="conteiner">
+        {/* <SpreadOperator /> */}
         <div className="todoBlock">
           <div className="title">
             <h1>할 일 목록</h1>
@@ -75,8 +86,12 @@ export default class App extends Component {
 
           {/* JSX Key 속성이란 : 요소의 리스트를 나열할때는 Key를 넣어줘야함, React가 변경, 추가 또는 제거된 항목을 식별하는데 도움을줌. 요소에 안정적인 ID를 부여하려면 배열 내부 요소에 Key를 제공해야함 */}
           {this.state.todoData.map((data) => (
-            <div style={this.getStyle()} key={data.id}>
-              <input type="checkbox" defaultChecked={data.completed} />
+            <div style={this.getStyle(data.completed)} key={data.id}>
+              <input
+                type="checkbox"
+                defaultChecked={false}
+                onChange={() => this.handleCompleChange({ dataId: data.id })}
+              />
               {data.title}
               <button
                 style={this.btnStyle}
