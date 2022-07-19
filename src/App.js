@@ -13,25 +13,39 @@ export default class App extends Component {
 
   getStyle = () => {
     return {
-      padding: "0 5px 15px 5px",
+      padding: "15px 5px 15px 5px",
       borderBottom: "1px dotted #000",
       // textDecoration: "none",
     };
   };
 
+  todoData = [
+    {
+      id: "1",
+      title: "공부하기",
+      completed: true,
+    },
+    {
+      id: "2",
+      title: "청소하기",
+      completed: false,
+    },
+  ];
+
   render() {
     return (
       <div className="conteiner">
-        컨데이너
         <div className="todoBlock">
           <div className="title">
             <h1>할 일 목록</h1>
 
-            <div style={this.getStyle()}>
-              <input type="checkbox" defaultChecked={false} />
-              공부하기
-              <button style={this.btnStyle}>x</button>
-            </div>
+            {this.todoData.map((data) => (
+              <div style={this.getStyle()} key={data.id}>
+                <input type="checkbox" defaultChecked={data.completed} />
+                {data.title}
+                <button style={this.btnStyle}>x</button>
+              </div>
+            ))}
           </div>
         </div>
       </div>
