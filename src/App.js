@@ -32,18 +32,28 @@ export default class App extends Component {
     },
   ];
 
+  handleClick = ({ dataId }) => {
+    let newTodoData = this.todoData.filter((data) => data.id !== dataId);
+    console.log("newTodoData", newTodoData);
+  };
+
   render() {
     return (
       <div className="conteiner">
         <div className="todoBlock">
           <div className="title">
             <h1>할 일 목록</h1>
-
+            {/* JSX Key 속성이란 : 요소의 리스트를 나열할때는 Key를 넣어줘야함, React가 변경, 추가 또는 제거된 항목을 식별하는데 도움을줌. 요소에 안정적인 ID를 부여하려면 배열 내부 요소에 Key를 제공해야함 */}
             {this.todoData.map((data) => (
               <div style={this.getStyle()} key={data.id}>
                 <input type="checkbox" defaultChecked={data.completed} />
                 {data.title}
-                <button style={this.btnStyle}>x</button>
+                <button
+                  style={this.btnStyle}
+                  onClick={() => this.handleClick({ dataId: data.id })}
+                >
+                  x
+                </button>
               </div>
             ))}
           </div>
