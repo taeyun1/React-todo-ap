@@ -1,24 +1,6 @@
 import React from "react";
 
 export default function List({ todoData, setTodoData }) {
-  const btnStyle = {
-    color: "#000",
-    border: "none",
-    padding: "5px 9px",
-    borderRadius: "50%",
-    cursor: "pointer",
-    float: "right",
-  };
-
-  // completed값이 true(체크)면 선긋기
-  const getStyle = (completed) => {
-    return {
-      padding: "15px 5px 15px 5px",
-      borderBottom: "1px dotted #000",
-      textDecoration: completed ? "line-through" : "none",
-    };
-  };
-
   const handleClick = ({ dataId }) => {
     let newTodoData = todoData.filter((data) => data.id !== dataId);
     console.log("newTodoData", newTodoData);
@@ -41,19 +23,28 @@ export default function List({ todoData, setTodoData }) {
     <div>
       {/* JSX Key 속성이란 : 요소의 리스트를 나열할때는 Key를 넣어줘야함, React가 변경, 추가 또는 제거된 항목을 식별하는데 도움을줌. 요소에 안정적인 ID를 부여하려면 배열 내부 요소에 Key를 제공해야함 */}
       {todoData.map((data) => (
-        <div style={getStyle(data.completed)} key={data.id}>
-          <input
-            type="checkbox"
-            defaultChecked={false}
-            onChange={() => handleCompleChange({ dataId: data.id })}
-          />
-          {data.title}
-          <button
-            style={btnStyle}
-            onClick={() => handleClick({ dataId: data.id })}
-          >
-            x
-          </button>
+        <div key={data.id}>
+          <div className="flex items-center justify-between w-full px-4 py-1 my-2 text-gray-600 bg-gray-200 border rounded">
+            <div className="items-center">
+              <input
+                type="checkbox"
+                defaultChecked={false}
+                className="mr-1.5"
+                onChange={() => handleCompleChange({ dataId: data.id })}
+              />
+              <span className={data.completed ? "line-through" : undefined}>
+                {data.title}
+              </span>
+            </div>
+            <div className="items-center">
+              <button
+                className="px-4 py-1"
+                onClick={() => handleClick({ dataId: data.id })}
+              >
+                x
+              </button>
+            </div>
+          </div>
         </div>
       ))}
     </div>
