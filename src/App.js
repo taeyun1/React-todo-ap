@@ -5,8 +5,6 @@ import Lists from "./components/Lists";
 // import SpreadOperator from "./SpreadOperator";
 
 export default function App() {
-  console.log("-----App 컴포넌트!-----");
-
   const [todoData, setTodoData] = useState([]);
   const [value, setValue] = useState("");
 
