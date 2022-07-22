@@ -2,9 +2,11 @@ import React from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import List from "./List";
 
-export default function Lists({ todoData, setTodoData }) {
+const Lists = ({ todoData, setTodoData, handleClick }) => {
+  console.log("Lists 컴포넌트!");
+
   const handleEnd = (result) => {
-    console.log("result", result);
+    // console.log("result", result);
 
     if (!result.destination) return;
 
@@ -43,6 +45,7 @@ export default function Lists({ todoData, setTodoData }) {
                       setTodoData={setTodoData}
                       provided={provided}
                       snapshot={snapshot}
+                      handleClick={handleClick}
                     />
                   )}
                 </Draggable>
@@ -55,4 +58,10 @@ export default function Lists({ todoData, setTodoData }) {
       </DragDropContext>
     </div>
   );
-}
+};
+
+export default React.memo(Lists);
+
+// Form에서 타이핑할때, Form컴포넌트와 그 State값을 가지고 있는
+// App 컴포넌트만 렌더링이 되야 하는데, Lists랑 List컴포넌트 들도 렌더링이 되고있음
+// React.memo메모로 렌더링이 되면 안되는 컴포넌트들 감싸주면 됨

@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import "./App.css";
 import Form from "./components/Form";
 import Lists from "./components/Lists";
 // import SpreadOperator from "./SpreadOperator";
 
 export default function App() {
+  console.log("-----App 컴포넌트!-----");
+
   const [todoData, setTodoData] = useState([]);
   const [value, setValue] = useState("");
 
@@ -29,6 +31,16 @@ export default function App() {
     setValue("");
   };
 
+  // useCallback사용
+  const handleClick = useCallback(
+    (dataId) => {
+      let newTodoData = todoData.filter((data) => data.id !== dataId);
+      // console.log("newTodoData", newTodoData);
+      setTodoData(newTodoData);
+    },
+    [todoData] // todoData가 변경될때마다. 실행
+  );
+
   return (
     <div className="flex items-center justify-center w-screen h-screen bg-blue-200">
       <div className="w-full p-6 m-4 bg-white rounded-lg shadow-xl lg:w-3/4 lg:max-w-lg">
@@ -36,7 +48,11 @@ export default function App() {
           <h1>할 일 목록</h1>
         </div>
 
-        <Lists todoData={todoData} setTodoData={setTodoData} />
+        <Lists
+          handleClick={handleClick}
+          todoData={todoData}
+          setTodoData={setTodoData}
+        />
         <Form handleSubmit={handleSubmit} value={value} setValue={setValue} />
       </div>
     </div>

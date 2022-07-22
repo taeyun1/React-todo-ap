@@ -8,12 +8,9 @@ const List = ({
   setTodoData,
   provided,
   snapshot,
+  handleClick,
 }) => {
-  const handleClick = (dataId) => {
-    let newTodoData = todoData.filter((data) => data.id !== dataId);
-    console.log("newTodoData", newTodoData);
-    setTodoData(newTodoData);
-  };
+  console.log("List 컴포넌트!");
 
   // 체크 박스 선택시 줄긋기
   // 해당 id값을 받고, 받은 id랑,  todoData의 id랑 일치하면, todoData의 completed값을 변경시킴
@@ -55,5 +52,4 @@ const List = ({
     </div>
   );
 };
-
-export default List;
+export default React.memo(List);
