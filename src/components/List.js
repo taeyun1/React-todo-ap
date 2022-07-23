@@ -23,6 +23,7 @@ const List = ({
       return data;
     });
     setTodoData(newTodoData);
+    localStorage.setItem("todoData", JSON.stringify(newTodoData));
   };
 
   // 수정 눌렀을때 실행
@@ -40,6 +41,8 @@ const List = ({
       return data;
     });
     setTodoData(newTodoData);
+    localStorage.setItem("todoData", JSON.stringify(newTodoData));
+
     setIsEditing(false);
   };
 
